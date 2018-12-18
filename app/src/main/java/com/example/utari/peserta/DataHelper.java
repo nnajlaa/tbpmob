@@ -21,6 +21,9 @@ public class DataHelper extends SQLiteOpenHelper {
         sql = "INSERT INTO biodata (id, nama, jk, ttl, alamat, instansi, hp, email) VALUES ('1501', 'Utari', 'perempuan', '1996-12-29','Indarung','unand','081364988567','utarirahmadiani1023@gmail.com');";
         db.execSQL(sql);
     }
+
+
+
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
         // TODO Auto-generated method stub

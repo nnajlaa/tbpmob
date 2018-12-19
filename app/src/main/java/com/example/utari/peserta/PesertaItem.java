@@ -104,7 +104,7 @@ public class PesertaItem implements Parcelable {
         this.foto = in.readString();
     }
 
-    public static final Parcelable.Creator<PesertaItem> CREATor = new Parcelable.Creator<PesertaItem>(){
+    public static final Parcelable.Creator<PesertaItem> creator = new Parcelable.Creator<PesertaItem>(){
         @Override
         public PesertaItem createFromParcel(Parcel source) {
             return null;

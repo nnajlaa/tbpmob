@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class PesertaList {
-    @SerializedName( "results" )
-    public List<PesertaItem> results;
+    @SerializedName( "data" )
+    public List<PesertaItem> data;
 
 }

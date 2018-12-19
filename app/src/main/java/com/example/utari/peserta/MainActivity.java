@@ -30,16 +30,9 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
     ArrayList<PesertaItem> daftarPeserta = new ArrayList<>();
-    RecyclerView rvPeserta;
+    RecyclerView recyclerView;
     ProgressBar progressBar;
     PesertaListAdapter pesertaListAdapter;
-
-//    String[] daftar;
-//    ListView ListView1;
-//    Menu menu;
-//    protected Cursor cursor;
-//    DataHelper dbcenter;
-//    public static MainActivity ma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +45,25 @@ public class MainActivity extends AppCompatActivity
         pesertaListAdapter.setDaftarPeserta(daftarPeserta);
         pesertaListAdapter.setClickHandler(this);
 
-        rvPeserta = findViewById(R.id.idRvPeserta);
-        rvPeserta.setAdapter(pesertaListAdapter);
-        rvPeserta.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = findViewById(R.id.idRvPeserta);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(pesertaListAdapter);
 
-        Button btn = (Button) findViewById(R.id.button_add);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(MainActivity.this, BuatBiodata.class);
-                startActivity(intent);
-            }
-        });
 
-//        ma = this;
-//        dbcenter = new DataHelper(this);
-//        RefreshList();
+        getPeserta();
+
+        //Button btn = (Button) findViewById(R.id.button_add);
+
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                Intent intent = new Intent(MainActivity.this, BuatBiodata.class);
+//                startActivity(intent);
+//            }
+//        });
+
     }
-
-//    public void RefreshList() {
-//        SQLiteDatabase db = dbcenter.getReadableDatabase();
-//        cursor = db.rawQuery("SELECT * FROM biodata", null);
-//        daftar = new String[cursor.getCount()];
-//        cursor.moveToFirst();
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,30 +73,36 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Toast.makeText( this, "Refresh", Toast.LENGTH_SHORT ).show();
+        //Toast.makeText( this, "Refresh", Toast.LENGTH_SHORT ).show();
         //SharedPreferences preferences = getPreferences( Context.MODE_PRIVATE );
+        if (item.getItemId() == R.id.idRefresh) {
+            Toast.makeText(this, "Refreshing data", Toast.LENGTH_SHORT).show();
+
+            getPeserta();
+        }
         return super.onOptionsItemSelected( item );
     }
 
     private void getPeserta(){
-        String API_BASE_URL = "http://pendaftaran-sbmptn.herokuapp.com/apipendaftar";
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
+                .baseUrl("http://pendaftaran-sbmptn.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         BuatBiodata client =  retrofit.create(BuatBiodata.class);
 
-        Call<PesertaList> call = client.getPeserta("http://pendaftaran-sbmptn.herokuapp.com/apipendaftar");
+        Call<PesertaList> call = client.getPeserta();
 
         call.enqueue(new Callback<PesertaList>() {
             @Override
             public void onResponse(Call<PesertaList> call, Response<PesertaList> response) {
-                Toast.makeText(MainActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
-                PesertaList movieList = response.body();
-                List<PesertaItem> listMovieItem = movieList.results;
-                pesertaListAdapter.setDaftarPeserta(listMovieItem);
+
+                PesertaList pesertaList = response.body();
+                List<PesertaItem> listPesertaItem = pesertaList.data;
+                pesertaListAdapter.setDaftarPeserta( new ArrayList<PesertaItem>(listPesertaItem ) );
+                recyclerView.setAdapter(pesertaListAdapter);
+
+                Toast.makeText(MainActivity.this, String.valueOf(listPesertaItem.get(0).nama), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -121,6 +114,15 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void pesertaItemClicked(PesertaItem pesertaItem) {
+
+//        Toast.makeText(
+//                this,
+//                "Item yang diklik adalah : " + pesertaItem.getNama(),
+//                Toast.LENGTH_SHORT).show();
+//
+//        Intent detailPesertaIntent = new Intent(this, DetailActivity.class);
+//        detailPesertaIntent.putExtra("key_movie_parcelable", pesertaItem);
+//        startActivity(detailPesertaIntent);
 
     }
 }

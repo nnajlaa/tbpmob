@@ -44,16 +44,15 @@ public class PesertaListAdapter extends RecyclerView.Adapter<PesertaListAdapter.
     @Override
     public void onBindViewHolder(@NonNull PesertaHolder pesertaHolder, int i) {
         PesertaItem pesertaItem = daftarPeserta.get(i);
-        pesertaHolder.textNama.setText(pesertaItem.getNama());
+        pesertaHolder.textNama.setText(pesertaItem.nama);
         pesertaHolder.textInstansi.setText(
-                String.valueOf(pesertaItem.getInstansi())
+                String.valueOf(pesertaItem.instansi)
         );
 
-        String url = "http://pendaftaran-sbmptn.herokuapp.com" + pesertaItem.getFoto();
+        String url = pesertaItem.foto;
         Glide.with(pesertaHolder.itemView)
                 .load(url)
                 .into(pesertaHolder.imgFoto);
-
     }
 
     @Override

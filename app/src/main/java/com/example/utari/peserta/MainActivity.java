@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "MainActivity";
     ArrayList<PesertaItem> daftarPeserta = new ArrayList<>();
     RecyclerView recyclerView;
-    ProgressBar progressBar;
     PesertaListAdapter pesertaListAdapter;
 
     @Override
@@ -48,8 +47,6 @@ public class MainActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.idRvPeserta);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(pesertaListAdapter);
-
-
 
         getPeserta();
 
@@ -100,9 +97,8 @@ public class MainActivity extends AppCompatActivity
                 PesertaList pesertaList = response.body();
                 List<PesertaItem> listPesertaItem = pesertaList.data;
                 pesertaListAdapter.setDaftarPeserta( new ArrayList<PesertaItem>(listPesertaItem ) );
-                recyclerView.setAdapter(pesertaListAdapter);
-
-                Toast.makeText(MainActivity.this, String.valueOf(listPesertaItem.get(0).nama), Toast.LENGTH_SHORT).show();
+                //recyclerView.setAdapter(pesertaListAdapter);
+                Toast.makeText(MainActivity.this, "Berhasil", Toast.LENGTH_SHORT).show();
             }
 
             @Override

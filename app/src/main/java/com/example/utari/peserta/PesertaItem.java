@@ -26,18 +26,6 @@ public class PesertaItem implements Parcelable {
         this.foto = foto;
     }
 
-    public static final Creator<PesertaItem> CREATOR = new Creator<PesertaItem>() {
-        @Override
-        public PesertaItem createFromParcel(Parcel in) {
-            return new PesertaItem( in );
-        }
-
-        @Override
-        public PesertaItem[] newArray(int size) {
-            return new PesertaItem[size];
-        }
-    };
-
     public int getId() {
         return id;
     }
@@ -104,15 +92,15 @@ public class PesertaItem implements Parcelable {
         this.foto = in.readString();
     }
 
-    public static final Parcelable.Creator<PesertaItem> creator = new Parcelable.Creator<PesertaItem>(){
+    public static final Parcelable.Creator<PesertaItem> CREATOR = new Parcelable.Creator<PesertaItem>() {
         @Override
         public PesertaItem createFromParcel(Parcel source) {
-            return null;
+            return new PesertaItem(source);
         }
 
         @Override
         public PesertaItem[] newArray(int size) {
-            return new PesertaItem[0];
+            return new PesertaItem[size];
         }
     };
 }

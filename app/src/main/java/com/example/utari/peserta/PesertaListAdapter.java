@@ -57,7 +57,7 @@ public class PesertaListAdapter extends RecyclerView.Adapter<PesertaListAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return daftarPeserta.size();
     }
 
     public class PesertaHolder extends RecyclerView.ViewHolder{
@@ -78,7 +78,8 @@ public class PesertaListAdapter extends RecyclerView.Adapter<PesertaListAdapter.
                     PesertaItem pesertaItem = daftarPeserta.get(getAdapterPosition());
                     clickHandler.pesertaItemClicked(pesertaItem);
                 }
-            });
+                }
+            );
         }
     }
 
